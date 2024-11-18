@@ -1,0 +1,1164 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
+    />
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        margin: 0;
+        padding: 20px;
+        background-color: #9bc3eb;
+        display: flex;
+      }
+      h1 {
+        text-align: center;
+        color: #333;
+        margin-bottom: 30px;
+      }
+      form {
+        display: flex;
+        flex-direction: column;
+      }
+      div.hidden {
+        display: none;
+      }
+      .link {
+        color: #0d6efd;
+        cursor: pointer;
+        text-decoration: underline;
+      }
+      .description-item {
+        margin: 10px 0;
+        padding: 10px;
+        display: flex;
+        align-items: center;
+      }
+      input {
+        padding: 5px;
+        margin: 0 10px;
+        border: 1px solid #ddd;
+        border-radius: 4px;
+      }
+      .galerie-edit {
+        display: grid;
+        grid-template-columns: 1fr 1fr 1fr;
+      }
+      .poze-edit {
+        height: 100px;
+        border: solid orange;
+        width: 100px;
+      }
+
+      /* STILIZAT HOME PAGE */
+      .home-page {
+        display: flex;
+        flex-direction: row;
+        min-height: 100vh;
+        background-color: aqua;
+        width: 100%;
+      }
+
+      .logo {
+        font-size: 24px;
+        font-weight: bold;
+        margin-bottom: 30px;
+        padding: 12px;
+      }
+
+      .iconite-stanga {
+        display: flex;
+        align-items: center;
+        padding: 12px 16px;
+        margin: 4px 0;
+        cursor: pointer;
+        border-radius: 8px;
+        color: #262626;
+        font-size: 16px;
+      }
+
+      .iconite-stanga:hover {
+        background-color: #f2f2f2;
+      }
+
+      .iconite-stanga i {
+        margin-right: 16px;
+        font-size: 20px;
+      }
+
+      .sidebar-left {
+        width: 245px;
+        border-right: 1px solid #dbdbdb;
+        padding: 8px 12px 20px 12px;
+        height: 100vh;
+        background: white;
+        margin-right: auto;
+      }
+
+      .sidebar-right {
+        width: 320px;
+        padding: 20px;
+        height: 100vh;
+        right: 0;
+        top: 0;
+        background-color: #fff;
+        border-left: "1px solid #dbdbdb";
+        margin-left: auto;
+      }
+
+      .stories-bar {
+        background: white;
+        border: 1px solid #dbdbdb;
+        padding: 16px;
+        border-radius: 8px;
+        margin-bottom: 24px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        gap: 12px;
+        flex-wrap: wrap;
+      }
+
+      .story {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        cursor: pointer;
+        padding: 0 4px;
+        width: 80px;
+      }
+
+      .story-circle {
+        width: 66px;
+        height: 66px;
+        border-radius: 50%;
+        border: solid red 2px;
+        padding: 3px;
+        margin-bottom: 8px;
+      }
+      .story-username {
+        font-size: 12px;
+        color: #262626;
+        text-align: center;
+        max-width: 74px;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+      }
+
+      .feed-instagram {
+        width: 100%;
+        padding: 20px;
+        background-color: #fff;
+        border: 1px solid #dbdbdb;
+      }
+
+      .eu {
+        font-size: 24px;
+        font-weight: bold;
+        margin-bottom: 30px;
+        padding: 12px;
+        cursor: pointer;
+      }
+      .urmaritor {
+        display: flex;
+        justify-content: space-between;
+      }
+      .urmaritori {
+        background-color: white;
+      }
+      .urmaritorNume {
+        padding: 10px;
+        font-size: 25px;
+        cursor: pointer;
+      }
+      .avatarurmaritor {
+        border: solid brown 5px;
+        border-radius: 50px;
+        width: 50px;
+        height: 50px;
+        cursor: pointer;
+      }
+
+      button {
+        color: #0026ff;
+        padding: 0;
+        border: none;
+        font-size: 20px;
+        background: none;
+      }
+      button:hover {
+        background-color: #f2f2f2;
+      }
+
+      /*STIL PENTRU POSTARI */
+
+      .chenar-postari {
+        margin-left: 350px;
+        margin-right: 350px;
+        height: 175px;
+        background: #efefef;
+      }
+
+      .avatar-postari {
+        width: 32px;
+        height: 32px;
+        border-radius: 50%;
+        background: #efefef;
+        margin-right: 12px;
+      }
+      /* STILIZAT PROFIL */
+      .btn {
+        background-color: #0095f6;
+        color: #fff;
+        border: none;
+        border-radius: 4px;
+        padding: 8px 16px;
+        font-size: 14px;
+        cursor: pointer;
+      }
+
+      .btn:hover {
+        background-color: #0077b6;
+      }
+
+      .gallery-image {
+        width: 100%;
+        height: auto;
+        object-fit: cover;
+        border-radius: 4px;
+      }
+
+      .imagine-postare {
+        object-fit: cover;
+      }
+      .users {
+        color: black;
+      }
+
+      .modal-overlay {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(
+          204,
+          204,
+          204,
+          0.5
+        ); /* Semi-transparent background but does not work */
+      }
+
+      .modal-content {
+        background: rgb(32, 32, 37);
+        padding: 20px;
+        border-radius: 8px;
+        z-index: 1001; /* Ensure content is above overlay */
+        position: relative; /* Position relative for close button */
+      }
+
+      #postModal {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        z-index: 1000; /* Make sure it's on top */
+      }
+    </style>
+  </head>
+  <body>
+    <script>
+      let users = JSON.parse(localStorage.getItem("users"));
+      if (!users) {
+        users = [];
+        localStorage.setItem("users", JSON.stringify(users));
+      }
+
+      //*de facut* peste tot unde MODIFICI pe connectedUser, trebuie sa-l salvezi si-n localStorage.
+      let connectedUser =
+        JSON.parse(localStorage.getItem("connectedUser")) || null;
+      if (connectedUser) {
+        Sidebar();
+        HomePage();
+      } else {
+        Login();
+      }
+
+      // AICI E PENTRU SALVARE IN LOCAL STORAGE SI PENTRU A LUA DIN LOCAL STORAGE CAND THE LOGHEZI O SA APELEZI MAI JOS
+      function isEmailTaken(email) {
+        // const users = JSON.parse(localStorage.getItem("users")) || [];
+        return users.some(
+          (user) => user.email.toLowerCase() === email.toLowerCase()
+        );
+      }
+
+      function saveUser(user) {
+        // let users = JSON.parse(localStorage.getItem("users")) || [];
+        users.push(user);
+        localStorage.setItem("users", JSON.stringify(users));
+      }
+
+      function loginUser(email, password) {
+        // let users = JSON.parse(localStorage.getItem("users")) || [];
+        let currentUser = users.find(
+          (user) => user.email === email && user.password === password
+        );
+
+        if (currentUser) {
+          Sidebar();
+          connectedUser = currentUser;
+          localStorage.setItem("connectedUser", JSON.stringify(connectedUser));
+          return true;
+        }
+
+        return false;
+      }
+      // AICI INCEPE PAGINA DE REGISTER
+      function Register() {
+        //AICI AM CREAT HEADING CU TEXTUL register
+        const headingRegister = document.createElement("h1");
+        headingRegister.textContent = "Register";
+        //AICI AM CREAT UN DIV CU CLASA CONTAINER UNDE MAI JOS AM CREAT UN FORM
+        const container = document.createElement("div");
+        container.id = "containerRegister";
+        container.className = "container";
+        container.style.border = "solid black";
+        container.style.maxWidth = "400px";
+        container.style.margin = "20px auto";
+        container.style.padding = "20px";
+        container.style.boxShadow = "0 0 10px rgba(0,0,0,0.1)";
+        container.style.backgroundColor = "white";
+        container.style.borderRadius = "8px";
+
+        //APPEND CHILD PENTRU A BAGA HEADING-UL CU TITLU REGISTER IN DIV
+        container.appendChild(headingRegister);
+        // AICI AM CREAT UN FORMULAR SI L-AM STILIZAT IN EL SI L-AM LEGAT DE CONTAINER PT CA CONTAINER E DIVU ADICA CLASA
+        let form = document.createElement("form");
+        form.style.maxWidth = "400px";
+        form.style.margin = "20px auto";
+        form.style.padding = "20px";
+        form.style.boxShadow = "0 0 10px rgba(0,0,0,0.1)";
+        form.style.backgroundColor = "white";
+        form.style.borderRadius = "8px";
+
+        // AICI SE REGASESC LABEL SI INPUT DIN FORMULAR
+        const label = document.createElement("label");
+        label.htmlFor = "username";
+        label.textContent = "First Name";
+
+        let inputFirstName = document.createElement("input");
+        inputFirstName.type = "text";
+        inputFirstName.id = "userName";
+        inputFirstName.placeholder = "FirstName";
+
+        const labelDoi = document.createElement("label");
+        labelDoi.htmlFor = "username";
+        labelDoi.textContent = "Last Name";
+
+        let inputLastName = document.createElement("input");
+        inputLastName.type = "text";
+        inputLastName.id = "userName";
+        inputLastName.placeholder = "LastName";
+
+        const labelTrei = document.createElement("label");
+        labelTrei.htmlFor = "username";
+        labelTrei.textContent = "Email";
+
+        let inputEmail = document.createElement("input");
+        inputEmail.type = "email";
+        inputEmail.id = "userEmail";
+        inputEmail.placeholder = "Email";
+
+        const labelPatru = document.createElement("label");
+        labelPatru.htmlFor = "username";
+        labelPatru.textContent = "Password";
+
+        let inputPw = document.createElement("input");
+        inputPw.type = "password";
+        inputPw.id = "userPw";
+        inputPw.placeholder = "Password";
+
+        const labelCinci = document.createElement("label");
+        labelCinci.htmlFor = "username";
+        labelCinci.textContent = "Repeat Password";
+
+        let inputRepeatPw = document.createElement("input");
+        inputRepeatPw.type = "password";
+        inputRepeatPw.id = "userPw";
+        inputRepeatPw.placeholder = "RepeatPassword";
+
+        //AICI AM APELAT LABEL SI INPUT IN FORMULAR
+
+        form.appendChild(label);
+        form.appendChild(inputFirstName);
+        form.appendChild(labelDoi);
+        form.appendChild(inputLastName);
+        form.appendChild(labelTrei);
+        form.appendChild(inputEmail);
+        form.appendChild(labelPatru);
+        form.appendChild(inputPw);
+        form.appendChild(labelCinci);
+        form.appendChild(inputRepeatPw);
+        // AICI AM CREAT BUTONU MAGIC
+        const submitBtn = document.createElement("button");
+        submitBtn.type = "submit";
+        submitBtn.textContent = "Register";
+        submitBtn.style.width = "100%";
+        submitBtn.style.padding = "10px";
+        submitBtn.style.backgroundColor = "#0d6efd";
+        submitBtn.style.color = "white";
+        submitBtn.style.border = "none";
+        submitBtn.style.borderRadius = "4px";
+        submitBtn.style.cursor = "pointer";
+        submitBtn.style.marginTop = "20px";
+        submitBtn.style.fontSize = "16px";
+        submitBtn.disabled = true;
+
+        const formFields = [
+          inputFirstName,
+          inputLastName,
+          inputEmail,
+          inputPw,
+          inputRepeatPw,
+        ];
+
+        formFields.forEach((field) => {
+          field.addEventListener("input", () => {
+            const areAllFieldsFilled = formFields.every(
+              (f) => f.value.trim() !== ""
+            );
+            submitBtn.disabled = !areAllFieldsFilled;
+          });
+        });
+
+        submitBtn.addEventListener("click", (e) => {
+          e.preventDefault();
+          const firstName = inputFirstName.value;
+          const lastName = inputLastName.value;
+          const email = inputEmail.value;
+          const password = inputPw.value;
+          const repeatPassword = inputRepeatPw.value;
+          // SA NU POTI SA DAI REGISTER DACA PAROLELE NU SUNT LA FEL
+          if (password !== repeatPassword) {
+            alert("Passwords do not match");
+            return;
+          }
+          // SA SALVEZE IN LOCAL STORAGE USERII
+          const newUser = {
+            firstName,
+            lastName,
+            email,
+            password,
+            posts: [],
+            profilePic: "",
+            followers: [],
+            following: [],
+          };
+          saveUser(newUser);
+          alert("Account created");
+          showLogin();
+        });
+        //AICI AM APELAT BUTONU LA FORMULAR CA SA SE ADAUGE IN EL
+        form.appendChild(submitBtn);
+
+        //AICI AM CREAT LINK PENTRU DACA AI CONT SUBT BUTON REGISTER
+        const goToLogin = document.createElement("a");
+        goToLogin.innerText = "Already have an account? Login here!";
+        goToLogin.className = "link";
+        goToLogin.style.marginTop = "10px";
+        goToLogin.style.textAlign = "center";
+
+        const containerLogin = document.getElementById("containerLogin");
+        function showLogin() {
+          container.classList.add("hidden");
+          containerLogin.classList.remove("hidden");
+        }
+
+        goToLogin.addEventListener("click", (e) => {
+          showLogin();
+        });
+
+        form.appendChild(goToLogin);
+        // AICI AM APELAT FORMULARU LA CONTAINER ADICA LA DIVU PRINCIPAL PT CA CONTAINER E CLASA
+        container.appendChild(form);
+        //AICI AM DAT APPENDCHILD CA CONTAINERU DE MAI SUS SA FIE LEGAT DE BODY/DOCUMENT
+        document.body.appendChild(container);
+      }
+      //AICI INCEPE PAGINA DE LOGIN
+      function Login() {
+        // AICI INCEPE PAGINA DE LOG IN
+        // LA FEL CA LA REGISTER AICI AM CREAT HEADING HEADINGLOGIN CU LOG IN CONTINUT
+        const headingLogin = document.createElement("h1");
+        headingLogin.textContent = "Log In";
+
+        // AICI AM CREAT UN CONTAINER DIV DENUMIT CONTAINERLOGIN SI STILIZAT
+        const containerLogin = document.createElement("div");
+        containerLogin.id = "containerLogin";
+        containerLogin.className = "container";
+        containerLogin.style.border = "solid black";
+        containerLogin.style.maxWidth = "400px";
+        containerLogin.style.margin = "20px auto";
+        containerLogin.style.padding = "20px";
+        containerLogin.style.boxShadow = "0 0 10px rgba(0,0,0,0.1)";
+        containerLogin.style.backgroundColor = "white";
+        containerLogin.style.borderRadius = "8px";
+
+        //AICI AM DAT LEGAT CONTAINERU DE DOCUMENT/BODY SI HEADINGU DE CONTAINER
+        document.body.appendChild(containerLogin);
+        containerLogin.appendChild(headingLogin);
+
+        // CA LA REGISTER BA VLADE AI FACUT UN FORMULAR SI STILIZAT ( MA ROG AI COPIAT DE SUS CA SA NU STAI SA-L RESCRII)
+        let formLogin = document.createElement("form");
+        formLogin.style.maxWidth = "400px";
+        formLogin.style.margin = "20px auto";
+        formLogin.style.padding = "20px";
+        formLogin.style.boxShadow = "0 0 10px rgba(0,0,0,0.1)";
+        formLogin.style.backgroundColor = "white";
+        formLogin.style.borderRadius = "8px";
+
+        // AI FACUT INPUTU SI LABEL PT EMAIL SI PAROLA PENTRU CA CU ASTEA TE LOGHEZI TINE MINTE
+        const labelEmail = document.createElement("label");
+        labelEmail.htmlFor = "username";
+        labelEmail.textContent = "Email";
+
+        let inputEmailLogin = document.createElement("input");
+        inputEmailLogin.type = "email";
+        inputEmailLogin.id = "userEmail";
+        inputEmailLogin.placeholder = "Email";
+
+        const labelParola = document.createElement("label");
+        labelParola.htmlFor = "username";
+        labelParola.textContent = "Password";
+
+        let inputPwL = document.createElement("input");
+        inputPwL.type = "password";
+        inputPwL.id = "userPw";
+        inputPwL.placeholder = "Password";
+
+        // AI LEGAT LABEL SI INPUT DE FORMULAR
+        formLogin.appendChild(labelEmail);
+        formLogin.appendChild(inputEmailLogin);
+        formLogin.appendChild(labelParola);
+        formLogin.appendChild(inputPwL);
+        //AI LEGAT FORMULARU DE LOGIN DE CONTAINER
+        containerLogin.appendChild(formLogin);
+        // AIC CREAT UN BUTON LA FEL COPY PASTE CA ESIT LENES
+        const loginBtn = document.createElement("button");
+        loginBtn.type = "submit";
+        loginBtn.textContent = "Log In";
+        loginBtn.style.width = "100%";
+        loginBtn.style.padding = "10px";
+        loginBtn.style.backgroundColor = "#0d6efd";
+        loginBtn.style.color = "white";
+        loginBtn.style.border = "none";
+        loginBtn.style.borderRadius = "4px";
+        loginBtn.style.cursor = "pointer";
+        loginBtn.style.marginTop = "20px";
+        loginBtn.style.fontSize = "16px";
+        //AM LEGAT BUTONU DE FORMULAR
+        formLogin.appendChild(loginBtn);
+
+        const faraCont = document.createElement("a");
+        faraCont.innerText = "Don't have an account? Click here!";
+        faraCont.className = "link";
+        faraCont.style.marginTop = "10px";
+        faraCont.style.textAlign = "center";
+        formLogin.appendChild(faraCont);
+
+        // AICI AM ADAUGAT FUNCTIA DE NAVIGATIE
+        function showRegister() {
+          containerLogin.classList.add("hidden");
+          Register();
+        }
+
+        faraCont.addEventListener("click", (e) => {
+          e.preventDefault();
+          showRegister();
+        });
+        //AM ADAUGAT FUNCTIA SA-MI IA CAND DAU CLICK PE BUTONU DE LOG IN USERII DIN LOCALSTORAGE
+        loginBtn.addEventListener("click", (e) => {
+          e.preventDefault();
+          const email = inputEmailLogin.value;
+          const password = inputPwL.value;
+          const isLoggedIn = loginUser(email, password);
+          if (isLoggedIn) {
+            alert("Te-ai logat");
+            containerLogin.classList.add("hidden");
+            HomePage();
+          }
+        });
+      }
+
+      // VLADE VEZI CA AI FORMULARU ALA DE SE VEDE MAI MIC CU INPU SI LABEL IN DIV LEGATE PRIN APPENDCHILD ASA LE LEGI BA
+      //HOMEPAGE
+      function HomePage() {
+        const connectedUser = JSON.parse(localStorage.getItem("connectedUser"));
+        if (!connectedUser) {
+          Login();
+          return;
+        }
+        //HOMEPAGE-UL CARE SE LEAGA DE BODY
+        const containerPrincipal = document.createElement("div");
+        containerPrincipal.id = "page";
+
+        const homePage = document.createElement("div");
+        homePage.id = "home-page";
+        homePage.className = "home-page";
+        //BADA DIN STANGA
+        const leftSidebar = document.createElement("div");
+        leftSidebar.className = "sidebar-left";
+        //LOGO SI ICONITE PENTRU BARA DIN STANGA
+        const logo = document.createElement("div");
+        logo.className = "logo";
+        logo.textContent = "Instagram";
+        leftSidebar.appendChild(logo);
+
+        //FEED-UL CARE SE LEAGA DE HOMEPAGE IN FEED SUNT BAGATE SI STORY-URILE
+        const feed = document.createElement("div");
+        feed.className = "feed-instagram";
+
+        const storiesBar = document.createElement("div");
+        storiesBar.className = "stories-bar";
+
+        const usernames = [
+          "vlad",
+          "mihai",
+          "george",
+          "bogdan",
+          "daniela",
+          "irina",
+        ];
+
+        usernames.forEach((username) => {
+          const story = document.createElement("div");
+          story.className = "story";
+
+          const storyCircle = document.createElement("div");
+          storyCircle.className = "story-circle";
+
+          const usernameDiv = document.createElement("div");
+          usernameDiv.className = "story-username";
+          usernameDiv.textContent = username;
+
+          story.appendChild(storyCircle);
+          story.appendChild(usernameDiv);
+          storiesBar.appendChild(story);
+        });
+        //AICI ESTE PROFILUL SI SUGESTIILE DE PRIETENIE CARE SE VOR LEGA DE BARA DIN DREAPTA
+        const eu = document.createElement("div");
+        eu.className = "eu";
+        eu.textContent = "Profilul Meu";
+
+        eu.addEventListener("click", Profil);
+
+        //AICI SE CREEAZA URMARITORII
+
+        const urmaritori = document.createElement("div");
+        urmaritori.className = "urmaritori";
+
+        //ne folosim de ala global
+        //users.className = "users";
+
+        //*de facut*trebuie adaptat => ne folosim de currentUser.following
+        let followedUsers =
+          JSON.parse(localStorage.getItem("followedUsers")) || [];
+
+        users.forEach((user) => {
+          const urmaritor = document.createElement("div");
+          urmaritor.className = "urmaritor";
+          const avatarurmaritor = document.createElement("div");
+          avatarurmaritor.className = "avatarurmaritor";
+          const urmaritorNume = document.createElement("div");
+          urmaritorNume.className = "urmaritorNume";
+          urmaritorNume.textContent = user.username;
+          const apasa = document.createElement("button");
+          apasa.textContent = followedUsers.includes(user.username)
+            ? "Unfollow"
+            : "Follow";
+          apasa.classList.add(
+            followedUsers.includes(user.username) ? "unfollow" : "follow"
+          );
+
+          apasa.addEventListener("click", () => {
+            if (apasa.textContent === "Follow") {
+              followedUsers.push(user.username);
+              connectedUser.following.push(user.email);
+              user.followers.push(connectedUser.email);
+              //*de facut*salvezi in localStorage pe connectedUser
+
+              apasa.textContent = "Unfollow";
+              apasa.classList.remove("follow");
+              apasa.classList.add("unfollow");
+            } else {
+              followedUsers = followedUsers.filter(
+                (followedUser) => followedUser !== user.username
+              );
+              apasa.textContent = "Follow";
+              apasa.classList.remove("unfollow");
+              apasa.classList.add("follow");
+            }
+
+            // Save the updated followed users to local storage
+            localStorage.setItem(
+              "followedUsers",
+              JSON.stringify(followedUsers)
+            );
+          });
+
+          urmaritor.appendChild(avatarurmaritor);
+          urmaritor.appendChild(urmaritorNume);
+          urmaritor.appendChild(apasa);
+          urmaritori.appendChild(urmaritor);
+        });
+
+        //BARA DIN DREAPTA
+        const rightSidebar = document.createElement("div");
+        rightSidebar.className = "sidebar-right";
+        rightSidebar.appendChild(eu);
+        rightSidebar.appendChild(urmaritori);
+        //STORY SE LEAGA DE FEED, CELE 2 BARI SI FEED-UL SE LEAGA DE HOME PAGE SI HOME PAGE-UL SE LEAGA DE BODY
+
+        //AICI VIN POSTARILE
+        for (let i = 0; i < 3; i++) {
+          const post = document.createElement("div");
+          post.className = "postari";
+
+          const titlu = document.createElement("div");
+          titlu.className = "titlu";
+
+          const avatarPostari = document.createElement("div");
+          avatarPostari.className = "avatar-postari";
+
+          const useriPostari = document.createElement("div");
+          useriPostari.className = "useri-postari";
+          useriPostari.textContent = "USERNAMEDETEST";
+
+          const chenarPostari = document.createElement("div");
+          chenarPostari.className = "chenar-postari";
+
+          titlu.appendChild(avatarPostari);
+          titlu.appendChild(useriPostari);
+
+          const imaginePostare = document.createElement("img"); //img
+          imaginePostare.className = "imagine-postare";
+          chenarPostari.appendChild(imaginePostare); //trb s-adaugi in chenar
+
+          post.appendChild(chenarPostari);
+          feed.appendChild(post);
+        }
+
+        feed.insertBefore(storiesBar, feed.firstChild);
+        homePage.appendChild(feed);
+        homePage.appendChild(rightSidebar);
+
+        containerPrincipal.appendChild(homePage);
+        document.body.appendChild(containerPrincipal);
+      }
+
+      function Sidebar() {
+        const leftSidebar = document.createElement("div");
+        leftSidebar.className = "sidebar-left";
+        //LOGO SI ICONITE PENTRU BARA DIN STANGA
+        const logo = document.createElement("div");
+        logo.className = "logo";
+        logo.textContent = "Instagram";
+        leftSidebar.appendChild(logo);
+
+        const iconite = [
+          { icon: "fa-house", text: "Home" },
+          { icon: "fa-magnifying-glass", text: "Search" },
+          { icon: "fa-compass", text: "Explore" },
+          { icon: "fa-film", text: "Reels" },
+          { icon: "fa-paper-plane", text: "Messages" },
+          { icon: "fa-heart", text: "Notifications" },
+          { icon: "fa-square-plus", text: "Create" },
+          { icon: "fa-user", text: "Profile" },
+        ];
+        iconite.forEach((icoana) => {
+          const iconite = document.createElement("div");
+          iconite.className = "iconite-stanga";
+
+          const icon = document.createElement("i");
+          icon.className = `fa-solid ${icoana.icon}`;
+
+          const text = document.createElement("span");
+          text.textContent = icoana.text;
+
+          if (icoana.icon === "fa-square-plus" || icoana.text === "Create") {
+            iconite.addEventListener("click", createPost);
+          }
+
+          iconite.appendChild(icon);
+          iconite.appendChild(text);
+          leftSidebar.appendChild(iconite);
+        });
+
+        const homeIcon = iconite.find((item) => item.text === "Home");
+        const homeIconElement = leftSidebar.querySelector(
+          `.iconite-stanga i.fa-solid.${homeIcon.icon}`
+        );
+        homeIconElement.parentElement.addEventListener("click", () => {
+          HomePage();
+          const containerProfil = document.querySelector("#containerProfil");
+          containerProfil.remove();
+        });
+
+        function closeModal() {
+          const modal = document.getElementById("postModal");
+          if (modal) {
+            modal.remove();
+          }
+        }
+
+        function createPost() {
+          const containerModal = document.createElement("div");
+          containerModal.id = "postModal";
+
+          const modalOverlay = document.createElement("div");
+          modalOverlay.classList.add("modal-overlay");
+          modalOverlay.onclick = closeModal;
+
+          const modalContent = document.createElement("div");
+          modalContent.classList.add("modal-content");
+
+          const xButton = document.createElement("span");
+          xButton.classList.add("close-button");
+          xButton.innerText = "×";
+          xButton.onclick = closeModal;
+
+          const fileInput = document.createElement("input");
+          fileInput.type = "file";
+          fileInput.accept = "image/*";
+
+          const descriptionInput = document.createElement("input");
+          descriptionInput.placeholder = "Add a description";
+
+          const btnAddPost = document.createElement("button");
+          btnAddPost.classList.add("btn");
+          btnAddPost.innerText = "Add Post";
+          btnAddPost.addEventListener("click", function (event) {
+            event.preventDefault();
+
+            const file = fileInput.files[0];
+            if (file) {
+              const imageUrl = URL.createObjectURL(file);
+              addImageToGallery(imageUrl, descriptionInput.value);
+              closeModal();
+            }
+          });
+
+          containerModal.appendChild(modalOverlay);
+          modalContent.appendChild(xButton);
+          modalContent.appendChild(fileInput);
+          modalContent.appendChild(descriptionInput);
+          modalContent.appendChild(btnAddPost);
+          containerModal.appendChild(modalContent);
+
+          document.body.appendChild(containerModal);
+        }
+
+        function addImageToGallery(imageUrl, description) {
+          const newImage = document.createElement("img");
+          newImage.src = imageUrl;
+          newImage.className = "gallery-image";
+          newImage.onclick = function () {
+            showImageModal(imageUrl, description);
+          };
+          const gallery = document.querySelector(".gallery");
+          gallery.appendChild(newImage);
+        }
+
+        function showImageModal(imageUrl, description) {
+          const imageModal = document.createElement("div");
+          imageModal.classList.add("image-modal");
+
+          const modalContent = document.createElement("div");
+          modalContent.classList.add("modal-content");
+
+          const closeButton = document.createElement("span");
+          closeButton.classList.add("close-button");
+          closeButton.innerText = "×";
+          closeButton.onclick = function () {
+            imageModal.remove();
+          };
+
+          const img = document.createElement("img");
+          img.src = imageUrl;
+
+          const descriptionElement = document.createElement("p");
+          descriptionElement.innerText = description;
+
+          const commentInput = document.createElement("input");
+          commentInput.placeholder = "Add a comment...";
+          commentInput.addEventListener("keydown", function (event) {
+            if (event.key === "Enter") {
+              postComment(imageUrl, commentInput.value);
+              commentInput.value = "";
+            }
+          });
+
+          let likes = JSON.parse(
+            localStorage.getItem(`likes-${imageUrl}`) || "0"
+          );
+          const likeButton = document.createElement("button");
+          likeButton.classList.add("like-button");
+          likeButton.innerText = `👍 ${likes}`;
+          likeButton.onclick = function () {
+            likes++;
+            likeButton.innerText = `👍 ${likes}`;
+            saveLikesToLocalStorage(imageUrl, likes);
+          };
+
+          const commentsContainer = document.createElement("div");
+          commentsContainer.classList.add("comments-container");
+
+          const comments = JSON.parse(
+            localStorage.getItem(`comments-${imageUrl}`) || "[]"
+          );
+          comments.forEach((comment) => {
+            const commentElement = document.createElement("div");
+            commentElement.classList.add("comment");
+            commentElement.style.color = "#333";
+            commentElement.innerText = comment;
+            commentsContainer.appendChild(commentElement);
+          });
+
+          modalContent.appendChild(closeButton);
+          modalContent.appendChild(img);
+          modalContent.appendChild(descriptionElement);
+          modalContent.appendChild(commentInput);
+          modalContent.appendChild(likeButton);
+          modalContent.appendChild(commentsContainer);
+          imageModal.appendChild(modalContent);
+
+          document.body.appendChild(imageModal);
+        }
+
+        function postComment(imageUrl, commentText) {
+          const commentsContainer = document.querySelector(
+            ".image-modal .comments-container"
+          );
+          const commentElement = document.createElement("div");
+          commentElement.classList.add("comment");
+          commentElement.style.color = "#333";
+          commentElement.innerText = commentText;
+          commentsContainer.appendChild(commentElement);
+
+          let comments = JSON.parse(
+            localStorage.getItem(`comments-${imageUrl}`) || "[]"
+          );
+          comments.push(commentText);
+          saveCommentsToLocalStorage(imageUrl, comments);
+        }
+
+        function saveCommentsToLocalStorage(imageUrl, comments) {
+          localStorage.setItem(
+            `comments-${imageUrl}`,
+            JSON.stringify(comments)
+          );
+        }
+
+        function saveLikesToLocalStorage(imageUrl, likes) {
+          localStorage.setItem(`likes-${imageUrl}`, JSON.stringify(likes));
+        }
+
+        document.body.appendChild(leftSidebar);
+      }
+
+      // AICI AM CREAT CONTAINERU DE PROFIL UNDE L-AM STILIZAT EXACT CA LA LOG IN SI REGISTER
+      function Profil() {
+        document.getElementById("home-page").remove();
+
+        // CONTAINERU DE PROFIL
+        const containerProfil = document.createElement("div");
+        containerProfil.className = "container";
+        containerProfil.id = "containerProfil";
+        containerProfil.style.maxWidth = "600px";
+        containerProfil.style.margin = "20px auto";
+        containerProfil.style.padding = "20px";
+        containerProfil.style.backgroundColor = "#fff";
+        containerProfil.style.border = "1px solid #ddd";
+        containerProfil.style.borderRadius = "4px";
+        const gallery = document.createElement("div");
+        gallery.className = "gallery";
+        gallery.id = "gallery";
+        gallery.style.display = "grid";
+        gallery.style.gridTemplateColumns = "repeat(3, 1fr)";
+        gallery.style.gap = "10px";
+        gallery.style.marginTop = "20px";
+
+        document.body.appendChild(containerProfil);
+
+        // HEADER DE PROFIL
+        const profileHeader = document.createElement("div");
+        profileHeader.style.display = "flex";
+        profileHeader.style.alignItems = "center";
+        profileHeader.style.marginBottom = "20px";
+        containerProfil.appendChild(profileHeader);
+
+        // ICONITA DE PROFIL
+        const profileIcon = document.createElement("div");
+        profileIcon.style.width = "120px";
+        profileIcon.style.height = "120px";
+        profileIcon.style.borderRadius = "50%";
+        profileIcon.style.backgroundColor = "#ddd";
+        profileIcon.style.marginRight = "20px";
+        profileIcon.style.cursor = "pointer";
+        profileIcon.addEventListener("click", uploadProfileImage);
+
+        // SA POTI SA ADAUGI IMAGINE LA PROFIL
+        function uploadProfileImage() {
+          const fileInput = document.createElement("input");
+          fileInput.type = "file";
+          fileInput.accept = "image/*";
+
+          fileInput.addEventListener("change", (event) => {
+            const file = event.target.files[0];
+            const imageUrl = URL.createObjectURL(file);
+
+            profileIcon.style.backgroundImage = `url(${imageUrl})`;
+            profileIcon.style.backgroundSize = "cover";
+            profileIcon.style.backgroundPosition = "center";
+          });
+
+          fileInput.click();
+        }
+
+        profileHeader.appendChild(profileIcon);
+
+        // INFORMATIILE MELE
+        const userInfo = document.createElement("div");
+        userInfo.style.flex = "1";
+
+        const username = document.createElement("h2");
+        const storedUsername = localStorage.getItem("Vlad");
+        username.textContent = storedUsername || "Vlad";
+        username.style.margin = "0 0 5px";
+
+        const biografieContainer = document.createElement("div");
+        biografieContainer.style.display = "flex";
+        biografieContainer.style.alignItems = "center";
+        biografieContainer.style.marginBottom = "10px";
+
+        const biografie = document.createElement("p");
+        const storedbiografie = localStorage.getItem("biografie") || "";
+        biografie.textContent = storedbiografie;
+        biografie.style.color = "#666";
+        biografie.style.flex = "1";
+        biografie.className = "biografie-text";
+
+        const editbiografieBtn = document.createElement("button");
+        editbiografieBtn.className = "btn";
+        editbiografieBtn.style.marginLeft = "10px";
+        editbiografieBtn.textContent = "Edit";
+        editbiografieBtn.addEventListener("click", editbiografie);
+
+        biografieContainer.appendChild(biografie);
+        biografieContainer.appendChild(editbiografieBtn);
+
+        const stats = document.createElement("div");
+        stats.style.display = "flex";
+        stats.style.fontSize = "14px";
+        stats.style.color = "#666";
+
+        const updatePostsCount = document.createElement("div");
+        const imageCount = gallery.childElementCount;
+        updatePostsCount.style.marginRight = "10px";
+        updatePostsCount.textContent = `Posts: ${imageCount}`;
+
+        const followersCount = document.createElement("div");
+        followersCount.className = "followers-count";
+        followersCount.style.marginRight = "10px";
+
+        //*de facut* adaptam => ne folosim de currentUser.following in loc de followerUsers
+        //n-ai nevoie de functie, scoti codul si-l lasi normal in pagina
+        //generezi dinamic numarul de followers si following folosindu-te de currentUser.followers si currentUser.following
+        const followedUsers =
+          JSON.parse(localStorage.getItem("followedUsers")) || [];
+        function updateFollowersCount() {
+          const followers = followedUsers.filter(
+            (username) => username === connectedUser.username
+          ).length;
+
+          if (followers === 0) {
+            followersCount.textContent = "Followers: No followers yet";
+          } else if (followers === 1) {
+            followersCount.textContent = "Followers: 1 follower";
+          } else {
+            followersCount.textContent = `Followers: ${followers} followers`;
+          }
+        }
+
+        updateFollowersCount();
+
+        document.addEventListener("followStatusChanged", updateFollowersCount);
+
+        const followingCount = document.createElement("div");
+
+        //*de facut* text content se pune dinamic din connectedUser.following
+        followingCount.textContent = "Following: Me";
+
+        stats.appendChild(updatePostsCount);
+        stats.appendChild(followersCount);
+        stats.appendChild(followingCount);
+
+        userInfo.appendChild(username);
+        userInfo.appendChild(biografieContainer);
+        userInfo.appendChild(stats);
+
+        profileHeader.appendChild(userInfo);
+        containerProfil.appendChild(gallery);
+        // GALERIE
+
+        function editbiografie() {
+          const biografieText =
+            biografieContainer.querySelector(".biografie-text");
+          const input = document.createElement("input");
+          input.type = "text";
+          input.value = biografieText.textContent;
+          input.className = "biografie-input";
+          input.style.flex = "1";
+
+          const savebiografieBtn = document.createElement("button");
+          savebiografieBtn.className = "btn";
+          savebiografieBtn.style.marginLeft = "10px";
+          savebiografieBtn.textContent = "Save";
+          savebiografieBtn.addEventListener("click", () => {
+            const newbiografieValue = input.value;
+            biografieText.textContent = newbiografieValue;
+            localStorage.setItem("biografie", newbiografieValue);
+            biografieContainer.replaceChild(biografieText, input);
+            biografieContainer.removeChild(savebiografieBtn);
+            editbiografieBtn.style.display = "inline-block";
+          });
+
+          biografieContainer.replaceChild(input, biografieText);
+          biografieContainer.appendChild(savebiografieBtn);
+          editbiografieBtn.style.display = "none";
+        }
+        function createPost() {
+          const fileInput = document.createElement("input");
+          fileInput.type = "file";
+          fileInput.accept = "image/*";
+
+          fileInput.addEventListener("change", (event) => {
+            const file = event.target.files[0];
+            if (file) {
+              const imageUrl = URL.createObjectURL(file);
+              addImageToGallery(imageUrl);
+            }
+          });
+
+          fileInput.click();
+        }
+      }
+    </script>
+  </body>
+</html>
