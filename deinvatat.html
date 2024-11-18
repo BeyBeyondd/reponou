@@ -1,0 +1,103 @@
+<script>
+  function addImageToGallery(imageUrl, description) {
+    const newImage = document.createElement("img");
+    newImage.src = imageUrl;
+    newImage.className = "gallery-image";
+    newImage.onclick = function () {
+      showImageModal(imageUrl, description);
+    };
+    const gallery = document.querySelector(".gallery");
+    gallery.appendChild(newImage);
+
+    updatePostsCount();
+  }
+
+  function showImageModal(imageUrl, description) {
+    const imageModal = document.createElement("div");
+    imageModal.classList.add("image-modal");
+
+    const modalContent = document.createElement("div");
+    modalContent.classList.add("modal-content");
+
+    const closeButton = document.createElement("span");
+    closeButton.classList.add("close-button");
+    closeButton.innerText = "×";
+    closeButton.onclick = function () {
+      imageModal.remove();
+    };
+
+    const img = document.createElement("img");
+    img.src = imageUrl;
+
+    const descriptionElement = document.createElement("p");
+    descriptionElement.innerText = description;
+
+    const commentInput = document.createElement("input");
+    commentInput.placeholder = "Add a comment...";
+    commentInput.addEventListener("keydown", function (event) {
+      if (event.key === "Enter") {
+        postComment(imageUrl, commentInput.value);
+        commentInput.value = "";
+      }
+    });
+
+    let likes = JSON.parse(localStorage.getItem(`likes-${imageUrl}`) || "0");
+    const likeButton = document.createElement("button");
+    likeButton.classList.add("like-button");
+    likeButton.innerText = `👍 ${likes}`;
+    likeButton.onclick = function () {
+      likes++;
+      likeButton.innerText = `👍 ${likes}`;
+      saveLikesToLocalStorage(imageUrl, likes);
+    };
+
+    const commentsContainer = document.createElement("div");
+    commentsContainer.classList.add("comments-container");
+
+    const comments = JSON.parse(
+      localStorage.getItem(`comments-${imageUrl}`) || "[]"
+    );
+    comments.forEach((comment) => {
+      const commentElement = document.createElement("div");
+      commentElement.classList.add("comment");
+      commentElement.style.color = "#333";
+      commentElement.innerText = comment;
+      commentsContainer.appendChild(commentElement);
+    });
+
+    modalContent.appendChild(closeButton);
+    modalContent.appendChild(img);
+    modalContent.appendChild(descriptionElement);
+    modalContent.appendChild(commentInput);
+    modalContent.appendChild(likeButton);
+    modalContent.appendChild(commentsContainer);
+    imageModal.appendChild(modalContent);
+
+    document.body.appendChild(imageModal);
+  }
+
+  function postComment(imageUrl, commentText) {
+    const commentsContainer = document.querySelector(
+      ".image-modal .comments-container"
+    );
+    const commentElement = document.createElement("div");
+    commentElement.classList.add("comment");
+    commentElement.style.color = "#333";
+    commentElement.innerText = commentText;
+    commentsContainer.appendChild(commentElement);
+
+    let comments = JSON.parse(
+      localStorage.getItem(`comments-${imageUrl}`) || "[]"
+    );
+    comments.push(commentText);
+    saveCommentsToLocalStorage(imageUrl, comments);
+  }
+
+  function saveCommentsToLocalStorage(imageUrl, comments) {
+    localStorage.setItem(`comments-${imageUrl}`, JSON.stringify(comments));
+  }
+
+  function saveLikesToLocalStorage(imageUrl, likes) {
+    localStorage.setItem(`likes-${imageUrl}`, JSON.stringify(likes));
+  }
+</script>
